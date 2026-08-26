@@ -65,5 +65,12 @@
     "failedToLoad": "Error al cargar datos",
     "retry": "Reintentar",
     "loading": "Cargando datos"
+  },
+  "onboarding": {
+    "step_nav": "Usa estas pestañas para moverte entre el dashboard, las bóvedas y el bridge.",
+    "step_vault_overview": "Tu tesorería de un vistazo — depósitos, participaciones y valor actual.",
+    "step_risk_forecast": "El motor de riesgo con IA proyecta la volatilidad de los próximos 7 días.",
+    "step_vault_cards": "Elige una bóveda para empezar a generar rendimientos. Cada tarjeta muestra su APY actual.",
+    "step_bridge": "Transfiere activos a la red desde otras cadenas cuando estés listo."
   }
 }
