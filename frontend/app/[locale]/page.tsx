@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { AiInsightStream } from "../../components/AiInsightStream";
 import { VaultOverviewCard } from "../../components/VaultOverviewCard";
+import OnboardingTour from "../../components/OnboardingTour";
 import dynamic from 'next/dynamic';
 import Image from "next/image";
 import Link from "next/link";
@@ -110,6 +111,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground">
+      <OnboardingTour />
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div
@@ -220,7 +222,7 @@ export default function Home() {
             </button>
             <button type="button" className={`hover:text-foreground transition-colors rounded-sm ${focusVisibleClass}`}>{t('vaults')}</button>
             <button type="button" className={`hover:text-foreground transition-colors rounded-sm ${focusVisibleClass}`}>{t('swap')}</button>
-            <Link href="/bridge" className={`hover:text-foreground transition-colors rounded-sm ${focusVisibleClass}`}>{t('bridge')}</Link>
+            <span data-tour="bridge-link"><Link href="/bridge" className={`hover:text-foreground transition-colors rounded-sm ${focusVisibleClass}`}>{t('bridge')}</Link></span>
             
             {/* More Dropdown */}
             <div className="relative group py-4 -my-4">
@@ -329,8 +331,10 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
               {/* Main Chart Section */}
               <div className="lg:col-span-2 space-y-6">
+                <div data-tour="vault-overview">
                 <VaultOverviewCard />
-                <div className="bg-card border border-border p-6 rounded-2xl">
+              </div>
+                <div data-tour="risk-forecast" className="bg-card border border-border p-6 rounded-2xl">
                   <div className="flex items-center justify-between mb-6">
                     <div className="space-y-1">
                       <h2 className="text-xl font-bold tracking-tight">AI Risk Forecast</h2>
@@ -352,7 +356,7 @@ export default function Home() {
 
                 <RewardSummary />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div data-tour="vault-cards" className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="bg-card border border-border p-6 rounded-2xl hover:border-primary/50 transition-colors group cursor-pointer">
                       <div className="flex justify-between items-start mb-4">
                         <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
