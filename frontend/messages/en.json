@@ -66,5 +66,16 @@
     "failedToLoad": "Failed to load data",
     "retry": "Retry",
     "loading": "Loading data"
+  },
+  "governance": {
+    "title": "Governance",
+    "subtitle": "Active proposals from the volatility shield multisig. Voting goes live with the governance rollout.",
+    "proposed_by": "Proposed by",
+    "guardian_approvals": "Guardian approvals",
+    "vote_tally": "Token vote tally",
+    "tally_aria": "Vote tally: {yes} yes, {no} no",
+    "status_pending": "Pending",
+    "status_timelock": "In Timelock",
+    "status_executed": "Executed"
   }
 }
