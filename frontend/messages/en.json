@@ -66,5 +66,12 @@
     "failedToLoad": "Failed to load data",
     "retry": "Retry",
     "loading": "Loading data"
+  },
+  "onboarding": {
+    "step_nav": "Use these tabs to move between your dashboard, vaults and the bridge.",
+    "step_vault_overview": "Your treasury at a glance — deposits, shares and current value.",
+    "step_risk_forecast": "The AI risk engine projects volatility for the next 7 days.",
+    "step_vault_cards": "Pick a vault to start earning. Each card shows its current APY.",
+    "step_bridge": "Move assets onto the network from other chains when you're ready."
   }
 }
