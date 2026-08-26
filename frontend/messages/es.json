@@ -66,6 +66,17 @@
     "retry": "Reintentar",
     "loading": "Cargando datos"
   },
+  "governance": {
+    "title": "Gobernanza",
+    "subtitle": "Propuestas activas del multisig del volatility shield. La votación se activa con el lanzamiento de gobernanza.",
+    "proposed_by": "Propuesto por",
+    "guardian_approvals": "Aprobaciones de guardianos",
+    "vote_tally": "Recuento de votos",
+    "tally_aria": "Recuento: {yes} a favor, {no} en contra",
+    "status_pending": "Pendiente",
+    "status_timelock": "En timelock",
+    "status_executed": "Ejecutada"
+  },
   "onboarding": {
     "step_nav": "Usa estas pestañas para moverte entre el dashboard, las bóvedas y el bridge.",
     "step_vault_overview": "Tu tesorería de un vistazo — depósitos, participaciones y valor actual.",
