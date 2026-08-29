@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { rpc, scValToNative } from "@stellar/stellar-sdk";
-import { useNetwork, NetworkType } from "@/contexts/NetworkContext";
+import { useNetwork } from "@/contexts/NetworkContext";
 import { useWallet } from "@/hooks/use-wallet";
-import { getVolatilityShieldAddress } from "@/lib/contracts.config";
+import { getContractAddress } from "@/lib/contracts.config";
+import type { NetworkName } from "@/lib/network";
 
 export interface SorobanEvent {
   id: string;
@@ -15,10 +16,9 @@ export interface SorobanEvent {
   ledger: string;
 }
 
-const RPC_URLS: Record<NetworkType, string> = {
-  [NetworkType.MAINNET]: "https://rpc.mainnet.stellar.org",
-  [NetworkType.TESTNET]: "https://rpc.testnet.stellar.org",
-  [NetworkType.FUTURENET]: "https://rpc-futurenet.stellar.org",
+const RPC_URLS: Record<NetworkName, string> = {
+  testnet: "https://rpc.testnet.stellar.org",
+  mainnet: "https://rpc.mainnet.stellar.org",
 };
 
 export function useSorobanEvents(callback: (event: SorobanEvent) => void) {
@@ -27,7 +27,7 @@ export function useSorobanEvents(callback: (event: SorobanEvent) => void) {
   const isPollingRef = useRef(false);
 
   useEffect(() => {
-    const contractId = getVolatilityShieldAddress(network);
+    const contractId = getContractAddress(network, 'vault');
     const rpcUrl = RPC_URLS[network];
     const server = new rpc.Server(rpcUrl);
 

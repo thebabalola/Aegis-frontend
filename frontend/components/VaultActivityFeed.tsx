@@ -11,7 +11,6 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { useNetwork } from '@/contexts/NetworkContext';
-import { getVolatilityShieldAddress } from '@/lib/contracts.config';
 
 export interface ActivityEvent {
   id: string;
@@ -200,7 +199,7 @@ export default function VaultActivityFeed() {
         {visibleEvents.map(event => {
           const Icon = EVENT_ICONS[event.type] || RefreshCw;
           const label = EVENT_LABELS[event.type] || 'Event';
-          const networkStr = network === 'mainnet' ? 'public' : network === 'futurenet' ? 'futurenet' : 'testnet';
+          const networkStr = network === 'mainnet' ? 'public' : 'testnet';
           const explorerUrl = `https://stellar.expert/explorer/${networkStr}/tx/${event.hash}`;
 
           return (

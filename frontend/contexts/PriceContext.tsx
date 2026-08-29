@@ -1,10 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { usePriceTracker, AssetPrices } from "@/hooks/usePriceTracker";
+import { usePriceTracker, type SpotPrices } from "@/hooks/usePriceTracker";
 
 interface PriceContextType {
-  prices: AssetPrices;
+  prices: SpotPrices;
   loading: boolean;
   error: string | null;
 }
@@ -12,7 +12,10 @@ interface PriceContextType {
 const PriceContext = createContext<PriceContextType | undefined>(undefined);
 
 export function PriceProvider({ children }: { children: ReactNode }) {
-  const { prices, loading, error } = usePriceTracker();
+  const { prices, loading, error } = usePriceTracker({
+    ids: ["stellar", "usd-coin", "wrapped-stellar"],
+    enabled: true,
+  });
 
   return (
     <PriceContext.Provider value={{ prices, loading, error }}>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Account, Contract, Networks, scValToNative, TransactionBuilder } from "@stellar/stellar-sdk";
 import { rpc } from "@stellar/stellar-sdk";
-import { getVolatilityShieldAddress } from "@/lib/contracts.config";
+import { getContractAddress } from "@/lib/contracts.config";
 import { useNetwork } from "@/contexts/NetworkContext";
 import { useWallet } from "@/hooks/use-wallet";
 
@@ -44,12 +44,10 @@ export function useWithdrawalQueuePosition(
     }
 
     try {
-      const contractAddress = getVolatilityShieldAddress(network);
+      const contractAddress = getContractAddress(network, 'vault');
       const rpcUrl = network === "mainnet"
         ? "https://rpc.mainnet.stellar.org"
-        : network === "futurenet"
-          ? "https://rpc-futurenet.stellar.org"
-          : "https://rpc.testnet.stellar.org";
+        : "https://rpc.testnet.stellar.org";
 
       const server = new rpc.Server(rpcUrl);
       const contract = new Contract(contractAddress);
@@ -62,9 +60,7 @@ export function useWithdrawalQueuePosition(
         networkPassphrase:
           network === "mainnet"
             ? Networks.PUBLIC
-            : network === "futurenet"
-              ? "Test SDF Future Network ; October 2022"
-              : Networks.TESTNET,
+            : Networks.TESTNET,
       })
         .addOperation(pendingWithdrawalsCall)
         .setTimeout(30)

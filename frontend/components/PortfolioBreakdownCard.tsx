@@ -3,12 +3,11 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useWallet } from "@/hooks/use-wallet";
 import { useNetwork } from "@/contexts/NetworkContext";
-import { useRealtimeVault } from "@/hooks/useRealtimeVault";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Card } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Wallet, PieChart, Activity, AlertCircle, RefreshCw } from "lucide-react";
-import { fetchUserBasis } from "@/lib/stellar";
-import { getVolatilityShieldAddress } from "@/lib/contracts.config";
+import { fetchUserBasis, fetchVaultData, type VaultMetrics } from "@/lib/stellar";
+import { getContractAddress } from "@/lib/contracts.config";
 
 function PortfolioBreakdownCardSkeleton() {
   return (
@@ -43,19 +42,30 @@ function PortfolioBreakdownCardSkeleton() {
 export function PortfolioBreakdownCard() {
   const { address, connected } = useWallet();
   const { network } = useNetwork();
-  const { metrics } = useRealtimeVault(address);
-  const { format } = useCurrency();
+  const { formatAmount } = useCurrency();
+  const [metrics, setMetrics] = useState<VaultMetrics | null>(null);
   const [entryPrice, setEntryPrice] = useState<number | null>(null);
   const [loadingBasis, setLoadingBasis] = useState(false);
   const [basisError, setBasisError] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+
+  const loadMetrics = useCallback(async () => {
+    if (!address || !connected || !network) return;
+    try {
+      const vaultId = getContractAddress(network, 'vault');
+      const data = await fetchVaultData(vaultId, address, network);
+      setMetrics(data);
+    } catch (err) {
+      console.error("Failed to load vault metrics:", err);
+    }
+  }, [address, connected, network]);
 
   const loadBasis = useCallback(async () => {
     if (!address || !connected || !network) return;
     setLoadingBasis(true);
     setBasisError(false);
     try {
-      const contractId = getVolatilityShieldAddress(network);
+      const contractId = getContractAddress(network, 'vault');
       const basis = await fetchUserBasis(contractId, address, network);
       if (basis.totalSharesMinted > 0) {
         setEntryPrice(basis.averageEntryPrice);
@@ -70,8 +80,9 @@ export function PortfolioBreakdownCard() {
   }, [address, connected, network]);
 
   useEffect(() => {
+    loadMetrics();
     loadBasis();
-  }, [loadBasis]);
+  }, [loadMetrics, loadBasis]);
 
   const stats = useMemo(() => {
     if (!metrics || !connected) return null;
@@ -156,7 +167,7 @@ export function PortfolioBreakdownCard() {
           ) : (
             <>
               <p className={`text-2xl font-bold ${isPositive ? "text-green-500" : "text-red-500"}`}>
-                {isPositive ? "+" : ""}{format(stats.unrealizedPnL)}
+                {isPositive ? "+" : ""}{formatAmount(stats.unrealizedPnL)}
               </p>
               <p className={`text-xs font-medium ${isPositive ? "text-green-500" : "text-red-500"} flex items-center gap-1`}>
                 {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
@@ -170,19 +181,19 @@ export function PortfolioBreakdownCard() {
           <p className="text-sm text-muted-foreground flex items-center gap-2">
             Estimated Value
           </p>
-          <p className="text-2xl font-bold text-primary">{format(stats.currentValue)}</p>
-          <p className="text-xs text-muted-foreground">at {format(stats.currentSharePrice)} / share</p>
+          <p className="text-2xl font-bold text-primary">{formatAmount(stats.currentValue)}</p>
+          <p className="text-xs text-muted-foreground">at {formatAmount(stats.currentSharePrice)} / share</p>
         </div>
       </div>
 
       <div className="mt-6 pt-6 border-t grid grid-cols-2 gap-4">
         <div>
           <p className="text-xs text-muted-foreground">Entry Share Price</p>
-          <p className="font-medium">{format(stats.entryPrice)}</p>
+          <p className="font-medium">{formatAmount(stats.entryPrice)}</p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground">Current Share Price</p>
-          <p className="font-medium">{format(stats.currentSharePrice)}</p>
+          <p className="font-medium">{formatAmount(stats.currentSharePrice)}</p>
         </div>
       </div>
     </Card>

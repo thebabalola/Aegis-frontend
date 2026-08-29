@@ -6,7 +6,7 @@ import { Maximize2, Loader2 } from 'lucide-react';
 import { useWallet } from '@/hooks/use-wallet';
 import { useNetwork } from '@/contexts/NetworkContext';
 import { fetchVaultData } from '@/lib/stellar';
-import { VAULT_CONTRACT_ID } from '@/lib/contracts.config';
+import { getContractAddress } from '@/lib/contracts.config';
 
 interface MaxAmountButtonProps {
   type: 'deposit' | 'withdraw';
@@ -35,7 +35,8 @@ export default function MaxAmountButton({
     setError(null);
 
     try {
-      const vaultData = await fetchVaultData(VAULT_CONTRACT_ID, address, network);
+      const vaultId = getContractAddress(network, 'vault');
+      const vaultData = await fetchVaultData(vaultId, address, network);
 
       let maxAmount: number;
 
