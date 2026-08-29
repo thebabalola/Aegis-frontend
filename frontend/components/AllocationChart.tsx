@@ -77,17 +77,6 @@ const AllocationChart = memo(function AllocationChart({
   slices: Slice[];
   onSliceClick?: (slice: Slice) => Promise<void> | void;
 }) {
-  if (!slices || slices.length === 0) {
-    return <AllocationChartEmptyState />;
-  }
-
-  const total = slices.reduce((s, c) => s + c.value, 0) || 1;
-
-  const size = 220;
-  const cx = size / 2;
-  const cy = size / 2;
-  const r = size / 2 - 4;
-
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState>({ visible: false, x: 0, y: 0, slice: null, pct: 0 });
@@ -116,7 +105,7 @@ const AllocationChart = memo(function AllocationChart({
     if (!container) return;
     const bounds = container.getBoundingClientRect();
     let x = e.clientX - bounds.left + TOOLTIP_OFFSET;
-    let y = e.clientY - bounds.top + TOOLTIP_OFFSET;
+    const y = e.clientY - bounds.top + TOOLTIP_OFFSET;
     if (x + TOOLTIP_WIDTH > bounds.width) {
       x = e.clientX - bounds.left - TOOLTIP_WIDTH - TOOLTIP_OFFSET;
     }
@@ -127,6 +116,17 @@ const AllocationChart = memo(function AllocationChart({
     setTooltip(t => ({ ...t, visible: false }));
     setHovered(null);
   }, []);
+
+  if (!slices || slices.length === 0) {
+    return <AllocationChartEmptyState />;
+  }
+
+  const total = slices.reduce((s, c) => s + c.value, 0) || 1;
+
+  const size = 220;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = size / 2 - 4;
 
   let angle = 0;
 

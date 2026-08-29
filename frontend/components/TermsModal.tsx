@@ -70,8 +70,8 @@ export default function TermsModal({
                 1. Acceptance of Terms
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                By accessing and using X-Aegis ("the Service"), you acknowledge that you have read,
-                understood, and agree to be bound by these Terms of Service ("Terms").
+                By accessing and using X-Aegis (&quot;the Service&quot;), you acknowledge that you have read,
+                understood, and agree to be bound by these Terms of Service (&quot;Terms&quot;).
                 If you do not agree to these Terms, you may not access or use the Service.
               </p>
             </section>
@@ -105,7 +105,7 @@ export default function TermsModal({
                 <p>• <strong>Smart Contract Risk:</strong> Smart contracts may contain vulnerabilities or bugs.</p>
                 <p>• <strong>Market Risk:</strong> Digital asset prices are highly volatile and can result in significant losses.</p>
                 <p>• <strong>Technical Risk:</strong> Network congestion, outages, or technical failures may occur.</p>
-                <p>• <strong>Regulatory Risk:</strong> Regulatory changes may affect the Service's operation.</p>
+                <p>• <strong>Regulatory Risk:</strong> Regulatory changes may affect the Service&apos;s operation.</p>
                 <p>• <strong>Impermanent Loss:</strong> Liquidity provision may result in impermanent loss.</p>
               </div>
             </section>
@@ -113,7 +113,7 @@ export default function TermsModal({
             <section>
               <h3 className="text-lg font-semibold mb-3">5. Limitation of Liability</h3>
               <p className="text-muted-foreground leading-relaxed">
-                X-Aegis is provided "as is" without warranties of any kind. In no event shall
+                X-Aegis is provided &quot;as is&quot; without warranties of any kind. In no event shall
                 X-Aegis, its developers, or affiliates be liable for any indirect, incidental,
                 special, or consequential damages arising out of or in connection with your use of the Service.
               </p>

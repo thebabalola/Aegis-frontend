@@ -150,7 +150,7 @@ export default function PrivacyModal({
             <section>
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <UserX className="h-5 w-5" />
-                8. Children's Privacy
+                8. Children&apos;s Privacy
               </h3>
               <p className="text-muted-foreground leading-relaxed">
                 Our service is not intended for children under 18. We do not knowingly collect
@@ -164,7 +164,7 @@ export default function PrivacyModal({
               <p className="text-muted-foreground leading-relaxed">
                 We may update this Privacy Policy from time to time. We will notify you of
                 any changes by posting the new policy on this page and updating the
-                "Last updated" date. Your continued use of the service constitutes
+                &quot;Last updated&quot; date. Your continued use of the service constitutes
                 acceptance of the updated policy.
               </p>
             </section>

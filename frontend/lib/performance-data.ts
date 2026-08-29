@@ -27,7 +27,7 @@ function generateMockSharePriceHistory(years: number): HeatmapDataPoint[] {
   startDate.setFullYear(endDate.getFullYear() - years);
 
   let currentSharePrice = 100;
-  let currentDate = new Date(startDate);
+  const currentDate = new Date(startDate);
 
   while (currentDate <= endDate) {
     if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
@@ -87,7 +87,7 @@ function generateMockSharePriceData(
 ): Array<{ date: string; price: number }> {
   const data: Array<{ date: string; price: number }> = [];
   let currentPrice = 100;
-  let currentDate = new Date(startDate);
+  const currentDate = new Date(startDate);
 
   while (currentDate <= endDate) {
     if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
