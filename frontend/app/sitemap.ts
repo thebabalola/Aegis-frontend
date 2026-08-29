@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/siteConfig";
 import { routing } from "@/i18n/routing";
 
-const STATIC_ROUTES = ["", "/bridge", "/settings", "/simulate"];
+const STATIC_ROUTES = ["", "/bridge", "/settings", "/simulate", "/learn"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
