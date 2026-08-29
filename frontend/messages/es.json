@@ -36,7 +36,15 @@
     "deposit": "Depositar",
     "withdraw": "Retirar",
     "connectWallet": "Conectar Billetera",
-    "partners": "Socios"
+    "partners": "Socios",
+    "learn": "Aprender",
+    "more": "Más"
+  },
+  "learn": {
+    "title": "Portal de Educación Comunitaria",
+    "subtitle": "Módulos breves e interactivos sobre volatilidad cambiaria y cobertura — las ideas sobre las que se construye X-Aegis. Sigue tu progreso a medida que avanzas.",
+    "back": "Panel",
+    "disclaimer": "Contenido únicamente educativo. Nada de esto constituye asesoramiento financiero ni una recomendación para comprar, vender o mantener ningún activo."
   },
   "SigningOverlay": {
     "signingTitle": "Firmando Transacción",

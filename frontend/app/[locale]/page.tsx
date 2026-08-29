@@ -150,6 +150,7 @@ export default function Home() {
             { key: "vaults", label: t('vaults'), href: "#" },
             { key: "swap", label: t('swap'), href: "#" },
             { key: "bridge", label: t('bridge'), href: "/bridge" },
+            { key: "learn", label: t('learn'), href: "/learn" },
             { key: "settings", label: t('settings'), href: "/settings" },
           ].map((item) =>
             item.href ? (
@@ -233,6 +234,7 @@ export default function Home() {
                 <button type="button" onClick={() => setActiveTab("referrals")} className="px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors">{t('referrals')}</button>
                 <button type="button" onClick={() => setActiveTab("partners")} className="px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors">{t('partners')}</button>
                 <Link href="/simulate" className="px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors">{t('simulate')}</Link>
+                <Link href="/learn" className="px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors">{t('learn')}</Link>
                 <Link href="/governance" className="px-4 py-2.5 text-left text-sm hover:bg-muted transition-colors">{t('governance')}</Link>
               </div>
             </div>
