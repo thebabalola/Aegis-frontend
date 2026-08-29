@@ -18,6 +18,8 @@ import { SigningOverlay, type SigningStatus } from "./SigningOverlay";
 import { useContractAddress } from "@/hooks/useContractAddress";
 import { useNetwork } from "@/contexts/NetworkContext";
 import { useVaultContext } from "@/contexts/VaultContext";
+import { LegalModal } from "./LegalModal";
+import { TermsOfServiceContent, PrivacyPolicyContent } from "./LegalContents";
 
 export function DepositTab() {
     const contractId = useContractAddress("vault");
@@ -33,6 +35,10 @@ export function DepositTab() {
     const [overlayStatus, setOverlayStatus] = useState<SigningStatus>("building");
     const [overlayTxHash, setOverlayTxHash] = useState<string | null>(null);
     const [overlayError, setOverlayError] = useState<string | null>(null);
+
+    const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
+    const [isTermsOpen, setIsTermsOpen] = useState<boolean>(false);
+    const [isPrivacyOpen, setIsPrivacyOpen] = useState<boolean>(false);
 
     const { optimisticBalance, addOptimisticTransaction, updateOptimisticTransaction } = useVaultContext();
 
@@ -59,6 +65,12 @@ export function DepositTab() {
         }
         checkConnection();
         fetchFee();
+        
+        // Initialize terms acceptance state from local storage
+        if (typeof window !== "undefined") {
+            const hasAccepted = localStorage.getItem("hasAcceptedTerms") === "true";
+            setAcceptedTerms(hasAccepted);
+        }
     }, []);
 
     const handleConnect = async () => {
@@ -246,15 +258,63 @@ export function DepositTab() {
                         <span>{estimatedFee}</span>
                     </div>
 
+                    <div className="flex items-start gap-2 mt-4 text-sm">
+                        <input
+                            type="checkbox"
+                            id="accept-terms"
+                            checked={acceptedTerms}
+                            onChange={(e) => {
+                                setAcceptedTerms(e.target.checked);
+                                localStorage.setItem("hasAcceptedTerms", e.target.checked ? "true" : "false");
+                            }}
+                            className="mt-1 flex-shrink-0 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 bg-background"
+                        />
+                        <label htmlFor="accept-terms" className="text-muted-foreground leading-snug select-none">
+                            I accept the{" "}
+                            <button
+                                type="button"
+                                onClick={() => setIsTermsOpen(true)}
+                                className="text-blue-500 hover:underline focus:outline-none focus:ring-1 focus:ring-blue-500 rounded px-0.5"
+                            >
+                                Terms of Service
+                            </button>{" "}
+                            and{" "}
+                            <button
+                                type="button"
+                                onClick={() => setIsPrivacyOpen(true)}
+                                className="text-blue-500 hover:underline focus:outline-none focus:ring-1 focus:ring-blue-500 rounded px-0.5"
+                            >
+                                Privacy Policy
+                            </button>
+                            .
+                        </label>
+                    </div>
+
                     <button
                         type="submit"
-                        disabled={isLoading || !amount || !address}
-                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded transition-colors"
+                        disabled={isLoading || !amount || !address || !acceptedTerms}
+                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded transition-colors mt-2"
                     >
                         {isLoading ? "Processing..." : "Deposit"}
                     </button>
                 </form>
             </div>
+
+            <LegalModal
+                isOpen={isTermsOpen}
+                onClose={() => setIsTermsOpen(false)}
+                title="Terms of Service"
+            >
+                <TermsOfServiceContent />
+            </LegalModal>
+
+            <LegalModal
+                isOpen={isPrivacyOpen}
+                onClose={() => setIsPrivacyOpen(false)}
+                title="Privacy Policy"
+            >
+                <PrivacyPolicyContent />
+            </LegalModal>
         </>
     );
 }
