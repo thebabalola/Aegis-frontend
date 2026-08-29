@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
-import { usePriceTracker, type SpotPrices } from "@/hooks/usePriceTracker";
+import { usePriceTracker } from "@/hooks/usePriceTracker";
+import type { SpotPrices } from "@/lib/prices/coingecko";
 
 interface PriceContextType {
   prices: SpotPrices;

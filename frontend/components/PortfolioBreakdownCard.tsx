@@ -6,7 +6,7 @@ import { useNetwork } from "@/contexts/NetworkContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Card } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Wallet, PieChart, Activity, AlertCircle, RefreshCw } from "lucide-react";
-import { fetchUserBasis, fetchVaultData, type VaultMetrics } from "@/lib/stellar";
+import { fetchUserBasis, fetchVaultData, NetworkType, type VaultMetrics } from "@/lib/stellar";
 import { getContractAddress } from "@/lib/contracts.config";
 
 function PortfolioBreakdownCardSkeleton() {
@@ -53,7 +53,7 @@ export function PortfolioBreakdownCard() {
     if (!address || !connected || !network) return;
     try {
       const vaultId = getContractAddress(network, 'vault');
-      const data = await fetchVaultData(vaultId, address, network);
+      const data = await fetchVaultData(vaultId, address, network as NetworkType);
       setMetrics(data);
     } catch (err) {
       console.error("Failed to load vault metrics:", err);
@@ -66,7 +66,7 @@ export function PortfolioBreakdownCard() {
     setBasisError(false);
     try {
       const contractId = getContractAddress(network, 'vault');
-      const basis = await fetchUserBasis(contractId, address, network);
+      const basis = await fetchUserBasis(contractId, address, network as NetworkType);
       if (basis.totalSharesMinted > 0) {
         setEntryPrice(basis.averageEntryPrice);
       }
